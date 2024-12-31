@@ -4,7 +4,52 @@ import axios from 'axios';
 import './Registration.css';
 
 const RegisterPage = () => {
-  
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setErrorMessage('') 
+
+    // Basic validation checks
+    if (password !== confirmPassword) {
+      setErrorMessage('Passwords do not match')
+      return
+    }
+
+    if (password.length < 8) {
+      setErrorMessage('Password must be at least 8 characters long')
+      return
+    }
+
+    try {
+      // Send registration data to backend
+      const response = await axios.post('http://localhost:3000/registration', {
+        firstName,
+        lastName,
+        email,
+        password,
+        phoneNumber, 
+      })
+
+      // Successful registration
+      if (response.status === 201) {
+        setTimeout(() => navigate('/'), 2000) // Redirect to login page
+      }
+    } catch (error) {
+      console.error("Registration error:", error)
+
+      // Display the error message from the backend
+      const message = error.response?.data?.message || 'An error occurred during registration'
+      setErrorMessage(message)
+    }
+  }
 
   return (
     <div className="container">
