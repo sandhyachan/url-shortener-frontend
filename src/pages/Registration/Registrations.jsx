@@ -40,7 +40,7 @@ const RegisterPage = () => {
 
       // Successful registration
       if (response.status === 201) {
-        setTimeout(() => navigate('/'), 2000) // Redirect to login page
+        setTimeout(() => navigate('/activation'), 2000) // Redirect to activation page
       }
     } catch (error) {
       console.error("Registration error:", error)
