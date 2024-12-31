@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Registration.css';
 
@@ -131,6 +131,9 @@ const RegisterPage = () => {
 
           <button type="submit">Register</button>
         </form>
+        <div>
+            <p>Already have an account? <Link to="/">Login here</Link></p>
+          </div>
       </div>
     </div>
   )
