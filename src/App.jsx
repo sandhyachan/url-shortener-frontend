@@ -1,34 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import LoginPage from './pages/Login/Login'
+import RegisterPage from './pages/Registration/Registrations'
+import { Route, Routes } from 'react-router-dom'
+import UrlShortenerPage from './pages/UrlShortener/UrlShortener'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      {/* https://t3.ftcdn.net/jpg/06/02/17/38/360_F_602173825_yEi09BzArfAyp7ilHOQWjhmM7oNzFVbZ.jpg */}
+    <Routes>
+      <Route Component={UrlShortenerPage} path='/shorten'/>
+      <Route Component={LoginPage} path='/'/>
+      <Route Component={RegisterPage} path='/registration'/>
+    </Routes>
     </>
   )
 }
