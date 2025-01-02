@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css'
 
+//Navbar for guests before logging in with limited functions
 const GuestNavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: '#a0c4ff' }}>
-      <div className="container-fluid"> {/* Use container-fluid for full-width */}
+      <div className="container-fluid"> 
         <a className="navbar-brand" href="/">OpalShort</a>
         <div className="collapse navbar-collapse">
           <ul className="navbar-nav ms-auto">

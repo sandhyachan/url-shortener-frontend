@@ -6,20 +6,20 @@ import UserNavBar from '../../components/UserNavBar';
 import PropTypes from 'prop-types';
 
 const DashboardPage = ({setLoggedIn}) => {
-  const [urlsCreatedToday, setUrlsCreatedToday] = useState(0);
-  const [urlsCreatedThisMonth, setUrlsCreatedThisMonth] = useState(0);
-  const [shortUrl, setShortUrl] = useState('');
-  const [longUrl, setLongUrl] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [loadingStats, setLoadingStats] = useState(true); // For loading state
-  const [loadingShortUrl, setLoadingShortUrl] = useState(false); // For creating short URL loading
-  const navigate = useNavigate();
+  const [urlsCreatedToday, setUrlsCreatedToday] = useState(0)
+  const [urlsCreatedThisMonth, setUrlsCreatedThisMonth] = useState(0)
+  const [shortUrl, setShortUrl] = useState('')
+  const [longUrl, setLongUrl] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [loadingStats, setLoadingStats] = useState(true) 
+  const [loadingShortUrl, setLoadingShortUrl] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const token = localStorage.getItem('authToken')
     if (!token) {
       // If no token is found, redirect to login page
-      navigate('/');
+      navigate('/')
     } else {
     // Fetch statistics for the dashboard
     axios.get('http://localhost:3000/dashboard/statistics', {
@@ -28,42 +28,42 @@ const DashboardPage = ({setLoggedIn}) => {
       }
     })
       .then(response => {
-        setUrlsCreatedToday(response.data.urlsCreatedToday);
-        setUrlsCreatedThisMonth(response.data.urlsCreatedThisMonth);
-        setLoadingStats(false);
+        setUrlsCreatedToday(response.data.urlsCreatedToday)
+        setUrlsCreatedThisMonth(response.data.urlsCreatedThisMonth)
+        setLoadingStats(false)
       })
       .catch(error => {
-        console.error('Error fetching statistics:', error);
-        setLoadingStats(false);
-        setErrorMessage('Failed to load statistics.');
+        console.error('Error fetching statistics:', error)
+        setLoadingStats(false)
+        setErrorMessage('Failed to load statistics.')
 
         if (error.response?.status === 401) {
-          localStorage.removeItem('authToken');
-          navigate('/');
+          localStorage.removeItem('authToken')
+          navigate('/')
         }
-      });
+      })
     }
-  }, [navigate]);
+  }, [navigate])
 
   const handleCreateShortUrl = async (e) => {
-    e.preventDefault();
-    setErrorMessage('');
-    setLoadingShortUrl(true); // Set loading when submitting the form
+    e.preventDefault()
+    setErrorMessage('')
+    setLoadingShortUrl(true) // Set loading when submitting the form
 
     if (!longUrl) {
-        setErrorMessage('Please enter a valid long URL.');
-        setLoadingShortUrl(false);
-        return;
+        setErrorMessage('Please enter a valid long URL.')
+        setLoadingShortUrl(false)
+        return
     }
 
-    const token = localStorage.getItem('authToken'); // Get the token from localStorage
+    const token = localStorage.getItem('authToken') // Get the token from localStorage
 
     // Check if token is missing or invalid
     if (!token) {
-        setErrorMessage('You must be logged in to create a short URL.');
-        navigate('/'); // Redirect to login page if no token
-        setLoadingShortUrl(false);
-        return;
+        setErrorMessage('You must be logged in to create a short URL.')
+        navigate('/') // Redirect to login page if no token
+        setLoadingShortUrl(false)
+        return
     }
 
     try {
@@ -75,32 +75,32 @@ const DashboardPage = ({setLoggedIn}) => {
                 Authorization: `Bearer ${token}`,
             }
         }
-    );
+    )
     
     if (response.status === 200) {
-      // Check if the response contains a short URL (this means it already existed)
-      setShortUrl(response.data.shortUrl); // Add token to the short URL
-      setLongUrl(''); // Clear the input field
+      // Check if the response contains a short URL 
+      setShortUrl(response.data.shortUrl) // Add token to the short URL
+      setLongUrl('') // Clear the input field
     } else {
-      setErrorMessage('Something went wrong while creating the short URL.');
+      setErrorMessage('Something went wrong while creating the short URL.')
   }
     } catch (error) {
-        console.error('Error creating short URL:', error);
+        console.error('Error creating short URL:', error)
         if (error.response && error.response.status === 401) {
-            setErrorMessage('Session expired or invalid token. Please log in again.');
-            navigate('/'); // Redirect to login if token is invalid/expired
+            setErrorMessage('Session expired or invalid token. Please log in again.')
+            navigate('/') // Redirect to login if token is invalid/expired
         } else {
-            setErrorMessage('Failed to create the short URL.');
+            setErrorMessage('Failed to create the short URL.')
         }
     }
 
-    setLoadingShortUrl(false); // Stop loading when request is done
-}; 
+    setLoadingShortUrl(false) // Stop loading when request is done
+} 
 
 
   const handleViewAllUrls = () => {
-    navigate('/all-urls');
-  };
+    navigate('/all-urls')
+  }
 
   return (<>
   <UserNavBar setLoggedIn={setLoggedIn}/>
@@ -156,11 +156,11 @@ const DashboardPage = ({setLoggedIn}) => {
       </div>
     </div>
     </>
-  );
-};
+  )
+}
 
-export default DashboardPage;
+export default DashboardPage
 
-DashboardPage.propTypes ={
+DashboardPage.propTypes = {
   setLoggedIn: PropTypes.func.isRequired
 }
