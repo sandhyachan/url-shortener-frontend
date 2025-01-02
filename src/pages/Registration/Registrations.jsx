@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Registration.css';
+import NavigationBar from '../../components/GuestNavBar';
 
 const RegisterPage = () => {
   const [firstName, setFirstName] = useState('')
@@ -51,7 +52,8 @@ const RegisterPage = () => {
     }
   }
 
-  return (
+  return (<>
+  <NavigationBar/>
     <div className="container">
       <div className="registration-container">
         <h2>Create Your Account</h2>
@@ -136,6 +138,7 @@ const RegisterPage = () => {
           </div>
       </div>
     </div>
+    </>
   )
 }
 
